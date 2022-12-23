@@ -1,0 +1,18 @@
+{
+  "manifest_version": 3,
+  "name": "aminion",
+  "description": "a chrome plugin",
+  "version": "0.1.0",
+  "action": { "default_popup": "index.html" },
+  "author": "leeweo",
+  "content_scripts": [
+    {
+      "js": ["src/content.ts"],
+      "matches": ["<all_urls>"]
+    }
+  ],
+  "background": {
+    "service_worker": "src/background.ts",
+    "type": "module"
+  }
+}
