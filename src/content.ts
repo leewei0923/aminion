@@ -12,4 +12,4 @@ divDom.style.zIndex = "100";
 
 const bodyDom = document.querySelector("body");
 bodyDom?.appendChild(divDom);
-createApp(App).mount("#collect");
+// createApp(App).mount("#collect");
