@@ -1,5 +1,21 @@
 :root {
   --normal_background: rgba(234, 234, 235, 0.8);
+  /* 被选中的背景色 */
   --btn_selected: rgba(46, 131, 253, 0.8);
   --sider_bar_btn: rgba(249, 249, 251, 1);
+
+  /* 正常情况下背景色和图标颜色 */
+  --btn_normal: rgba(46, 131, 253, 0.1);
+  --btn_normal_color: #1c1b1f;
+
+  /* 圆角尺寸 */
+  --border_radius_large: 15px;
+  --border_radius_midle: 10px;
+  --border_radius_small: 5px;
+
+  /* 颜色代码 */
+  --deep_blue: rgba(26, 131, 238, 1);
+  --deep_blue_800: rgba(46, 131, 253, 0.8);
+  --deep_blue_500: rgba(46, 131, 253, 0.5);
+  --deep_blue_100: rgba(85, 152, 250, 0.1);
 }
