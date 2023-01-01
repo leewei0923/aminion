@@ -2,26 +2,28 @@
 import textCard from "./collect/textCard.vue";
 import linkCard from "./collect/linkCard.vue";
 import picCard from "./collect/picCard.vue";
+import { ref, onMounted, onUpdated } from "vue";
 
 const props = defineProps({
   hidden: { type: Boolean, required: true },
 });
 
-
-
 const onWheel = (e: WheelEvent) => {
-  console.log(
-    `deltaY: ${e.deltaY}, deltaMode: ${e.deltaMode}, offsetX:${e.offsetX} , offsetY: ${e.offsetY}`
-  );
-
-  console.log(e);
+  console.log(e.deltaY);
 };
+
+const onRefresh = () => {
+  console.log("刷新");
+};
+
+onMounted(() => {});
+
+onUpdated(() => {});
 </script>
 
 <template>
   <div :hidden="props.hidden">
-    <div class="aminion-collect-container" @wheel="onWheel">
-      <p class="aminion-collect-pull-refresh">刷新</p>
+    <div class="aminion-collect-container" @wheel="onWheel" ref="collectRef">
       <textCard
         id="2"
         content="6、不管前方的路有多苦，只要走的方向正确，不管多么崎岖不平，都比站在原地更加接近幸福。
@@ -30,6 +32,8 @@ const onWheel = (e: WheelEvent) => {
         v-for="item in [1, 2, 3, 4, 5, 6, 7, 8, 9]"
       ></textCard>
     </div>
+
+    <button class="aminion-collect-refresh-btn" @click="onRefresh">刷新</button>
   </div>
 </template>
 
@@ -44,7 +48,30 @@ const onWheel = (e: WheelEvent) => {
   row-gap: 8px;
   flex-direction: column;
   overflow-y: scroll;
-  behavior: smooth;
+  scroll-behavior: smooth;
+}
+
+.aminion-collect-refresh-btn {
+  height: 30px;
+  width: 100px;
+  background-color: var(--deep_blue_800);
+  position: absolute;
+  bottom: 100px;
+  left: 50px;
+  border-radius: var(--border_radius_small);
+  color: #fff;
+  outline: none;
+  border: none;
+  font-weight: 400;
+  letter-spacing: 2px;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.12);
+  cursor: pointer;
+  animation: var(--animation_btn_throttle);
+}
+
+.aminion-collect-refresh-btn:active {
+  background-color: var(--deep_blue_500);
+  animation: none;
 }
 
 .aminion-collect-container::-webkit-scrollbar {
@@ -64,4 +91,6 @@ const onWheel = (e: WheelEvent) => {
   /* overflow: hidden; */
   font-size: 0.6rem;
 }
+
+
 </style>

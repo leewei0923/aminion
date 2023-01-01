@@ -2,6 +2,7 @@
 import { FolderFocus, Notes, Remind, Schedule } from "@icon-park/vue-next";
 import { storeToRefs } from "pinia";
 import { ref } from "vue";
+import AddMore from "./AddMore.vue";
 import { siderTagStore } from "../store/sideBarTag";
 
 const store = siderTagStore();
@@ -13,8 +14,13 @@ const { changeSiderTag } = store;
  */
 const itemOpenFlag = ref("");
 const onChangeItem = (label: string) => {
-  itemOpenFlag.value = label;
-  changeSiderTag(label);
+  if (itemOpenFlag.value === label) {
+    itemOpenFlag.value = "";
+    changeSiderTag("");
+  } else {
+    itemOpenFlag.value = label;
+    changeSiderTag(label);
+  }
 };
 </script>
 
@@ -69,6 +75,9 @@ const onChangeItem = (label: string) => {
       >
         <schedule theme="outline" size="24" />
       </div>
+
+      <AddMore />
+
     </section>
   </div>
 </template>

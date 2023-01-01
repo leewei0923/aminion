@@ -1,3 +1,10 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+
 :root {
   --normal_background: rgba(234, 234, 235, 0.8);
   /* 被选中的背景色 */
@@ -18,4 +25,16 @@
   --deep_blue_800: rgba(46, 131, 253, 0.8);
   --deep_blue_500: rgba(46, 131, 253, 0.5);
   --deep_blue_100: rgba(85, 152, 250, 0.1);
+
+  /*按钮防抖*/
+  --animation_btn_throttle: throttle 1s step-end forwards;
+}
+
+@keyframes throttle {
+  from {
+    pointer-events: none;
+  }
+  to {
+    pointer-events: all;
+  }
 }

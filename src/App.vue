@@ -4,6 +4,7 @@ import LoginIn from "./components/LoginIn.vue";
 import CollectPage from "./components/collectPage.vue";
 import { siderTagStore } from "./store/sideBarTag";
 import { storeToRefs } from "pinia";
+import editor from "./components/editor/editor.vue";
 
 const store = siderTagStore();
 
@@ -15,6 +16,8 @@ const { siderTag, getSiderTag } = storeToRefs(store);
     <SideBar />
     <LoginIn qrcode="登录账号" :hidden="siderTag != 'loginIn'" />
     <CollectPage :hidden="siderTag != 'collect'" />
+
+    <editor />
   </div>
 </template>
 
