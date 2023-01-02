@@ -51,6 +51,12 @@ onUpdated(() => {});
   scroll-behavior: smooth;
 }
 
+@media (max-height: 640px) {
+  .aminion-collect-container {
+    height: 25rem;
+  }
+}
+
 .aminion-collect-refresh-btn {
   height: 30px;
   width: 100px;

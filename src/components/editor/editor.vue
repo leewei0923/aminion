@@ -12,7 +12,6 @@ import {
   AlignTextLeft,
   AlignTextCenter,
   AlignTextRight,
-  HighLight,
   H,
   Delete,
   Save,
@@ -24,35 +23,60 @@ import Heading from "@tiptap/extension-heading";
 import TextAlign from "@tiptap/extension-text-align";
 import Text from "@tiptap/extension-text";
 import ListItem from "@tiptap/extension-list-item";
-import CodeBlockLowlight from "@tiptap/extension-code-block-lowlight";
+import Lowlight from "@tiptap/extension-code-block-lowlight";
 import { lowlight } from "lowlight";
+import { onBeforeUnmount, onMounted, ref } from "vue";
+import dayjs from "dayjs";
+
+const props = defineProps({
+  hidden: { type: Boolean, required: true },
+});
 
 const editor = useEditor({
   content: "hello tiptap",
+
   extensions: [
     StarterKit,
     Typography,
-    Text,
-    ListItem,
-    Heading.configure({
-      levels: [1, 2],
+    Lowlight.configure({
+      lowlight,
     }),
     TextAlign.configure({
       types: ["heading", "paragraph"],
     }),
-    CodeBlockLowlight.configure({
-      lowlight,
-    }),
+    Heading,
+    Text,
   ],
 });
+
+// 默认标题
+let defaultTitleRef = ref("");
+
+onMounted(() => {
+  defaultTitleRef.value = dayjs().format("YYYYMMDDHHmm");
+});
+
+
+const onSave = () => {
+  console.log(editor.value?.getHTML());
+  console.log(defaultTitleRef.value);
+};
 </script>
 
 <template>
-  <div class="aminion-editor-container" v-if="editor">
+  <div class="aminion-editor-container" v-if="editor" :hidden="props.hidden">
+    <div class="aminion-editor-title-container">
+      <span>标题:</span>
+      <input
+        type="text"
+        class="aminion-editor-title-input"
+        placeholder="请输入标题"
+        v-model="defaultTitleRef"
+      />
+    </div>
     <editor-content class="aminion-editor-content" :editor="editor" />
 
     <section class="aminion-editor-sider-options">
-      <h theme="outline" size="24" fill="#333" />
       <text-bold
         theme="outline"
         @click="editor?.chain().focus().toggleBold().run()"
@@ -107,11 +131,6 @@ const editor = useEditor({
         @click="editor?.chain().focus().setTextAlign('right').run()"
         :class="{ 'is-active': editor.isActive({ textAlign: 'right' }) }"
       />
-      <high-light
-        theme="outline"
-        @click="editor?.chain().focus().toggleCodeBlock().run()"
-        :class="{ 'is-active': editor.isActive({ textAlign: 'right' }) }"
-      />
       <undo
         theme="outline"
         @click="editor?.chain().focus().undo().run()"
@@ -127,7 +146,7 @@ const editor = useEditor({
 
       <div class="aminion-editor-operate-boxs">
         <delete theme="outline" fill="#EE685D" title="删除" />
-        <save theme="outline" fill="#1D7DFA"  title="保存" />
+        <save theme="outline" fill="#1D7DFA" title="保存" @click="onSave" />
       </div>
     </section>
   </div>
@@ -140,7 +159,28 @@ const editor = useEditor({
   width: 25vw;
   height: 80vh;
   background-color: var(--normal_background);
-  border-radius: 10px 0 0 10px;
+  border-radius: 0 0 0 10px;
+}
+
+/* 标题框 */
+.aminion-editor-title-container {
+  width: calc(100% + 30px);
+  height: 30px;
+  background-color: #70cff8;
+  position: absolute;
+  top: -30px;
+  border-radius: 10px 10px 0 0;
+  background-color: var(--normal_background);
+  border-bottom: 2px dashed var(--sider_bar_btn);
+}
+
+.aminion-editor-title-input {
+  border: none;
+  margin: 0 0 0 5px;
+  height: 100%;
+  background-color: var(--normal_background);
+  outline: none;
+  width: 82%;
 }
 
 .aminion-editor-content {
@@ -215,14 +255,14 @@ h6 {
 }
 
 .aminion-editor-content .ProseMirror blockquote {
-  padding-left: 1rem;
-  border-left: 2px solid rgba(#0d0d0d, 0.1);
+  padding-left: 0.8rem;
+  border-left: 2px solid rgba(15, 15, 15, 0.1);
 }
 
 .aminion-editor-content .ProseMirror hr {
   border: none;
-  border-top: 2px solid rgba(#0d0d0d, 0.1);
-  margin: 2rem 0;
+  border-top: 2px solid rgba(15, 15, 15, 0.1);
+  margin: 0.5rem 0;
 }
 
 .hljs-variable,
@@ -304,7 +344,7 @@ h6 {
 
 .aminion-editor-sider-options {
   background-color: var(--normal_background);
-  border-radius: 0 10px 10px 0;
+  border-radius: 0 0 10px 0;
   border-left: 2px dashed var(--sider_bar_btn);
   position: absolute;
   right: -30px;
@@ -319,6 +359,12 @@ h6 {
   align-items: center;
   padding: 10px 0;
   color: #333;
+}
+
+@media (max-height: 640px) {
+  .aminion-editor-sider-options {
+    row-gap: 3px;
+  }
 }
 
 .aminion-editor-sider-options span {

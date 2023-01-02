@@ -7,12 +7,13 @@ import { siderTagStore } from "../store/sideBarTag";
 
 const store = siderTagStore();
 
+const { siderTag } = storeToRefs(store);
 const { changeSiderTag } = store;
 
 /**
  * 改变边栏菜单的状态
  */
-const itemOpenFlag = ref("");
+const itemOpenFlag = siderTag;
 const onChangeItem = (label: string) => {
   if (itemOpenFlag.value === label) {
     itemOpenFlag.value = "";
@@ -108,6 +109,12 @@ const onChangeItem = (label: string) => {
   justify-content: center;
   align-items: center;
   row-gap: 30px;
+}
+
+@media (max-height: 640px) {
+  .aminion-sidebar-boxs {
+    row-gap: 10px;
+  }
 }
 
 .aminion-sidebar-btn-box {
