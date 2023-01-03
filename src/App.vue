@@ -6,6 +6,7 @@ import { siderTagStore } from "./store/sideBarTag";
 import { storeToRefs } from "pinia";
 import editor from "./components/editor/editor.vue";
 import EditorTask from "./components/EditorTask.vue";
+import NotePage from "./components/NotePage.vue";
 
 const store = siderTagStore();
 
@@ -20,6 +21,7 @@ const { siderTag, getSiderTag } = storeToRefs(store);
 
     <editor :hidden="siderTag != 'edit-note'" />
     <EditorTask :hidden="siderTag != 'edit-task'" />
+    <NotePage :hidden="siderTag != 'note'" />
   </div>
 </template>
 
