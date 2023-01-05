@@ -8,6 +8,7 @@ import editor from "./components/editor/editor.vue";
 import EditorTask from "./components/EditorTask.vue";
 import NotePage from "./components/NotePage.vue";
 import Loading from "./components/common-components/loading/loading.vue";
+import NoticePage from "./components/NoticePage.vue";
 
 const store = siderTagStore();
 
@@ -23,8 +24,9 @@ const { siderTag, getSiderTag } = storeToRefs(store);
     <editor :hidden="siderTag != 'edit-note'" />
     <EditorTask :hidden="siderTag != 'edit-task'" />
     <NotePage :hidden="siderTag != 'note'" />
+    <NoticePage :hidden="siderTag != 'notice'" />
 
-    <!-- <Loading type="circle"  :size="20"  /> -->
+    <!-- <Loading type="line" fill="purple" :size="20"  /> -->
   </div>
 </template>
 
