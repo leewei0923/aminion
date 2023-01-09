@@ -56,7 +56,6 @@ onMounted(() => {
   defaultTitleRef.value = dayjs().format("YYYYMMDDHHmm");
 });
 
-
 const onSave = () => {
   console.log(editor.value?.getHTML());
   console.log(defaultTitleRef.value);
@@ -160,6 +159,7 @@ const onSave = () => {
   height: 80vh;
   background-color: var(--normal_background);
   border-radius: 0 0 0 10px;
+  z-index: 9999;
 }
 
 /* 标题框 */
@@ -172,9 +172,12 @@ const onSave = () => {
   border-radius: 10px 10px 0 0;
   background-color: var(--normal_background);
   border-bottom: 2px dashed var(--sider_bar_btn);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
 }
 
-.aminion-editor-title-input {
+.aminion-editor-title-container .aminion-editor-title-input {
   border: none;
   margin: 0 0 0 5px;
   height: 100%;
@@ -219,8 +222,8 @@ const onSave = () => {
 }
 
 .aminion-editor-content .ProseMirror code {
-  font-size: 0.9rem;
-  padding: 0.25em;
+  font-size: 14px;
+  padding: 4px;
   border-radius: 0.25em;
   background-color: rgba(#616161, 0.1);
   color: #ffffff;
@@ -229,7 +232,7 @@ const onSave = () => {
 
 .aminion-editor-content .ProseMirror ul,
 ol {
-  padding: 0 1rem;
+  padding: 0 16px;
 }
 
 .aminion-editor-content .ProseMirror h1,
@@ -245,8 +248,8 @@ h6 {
   background: #0d0d0d;
   color: #fff;
   font-family: "JetBrainsMono", monospace;
-  padding: 0.75rem 1rem;
-  border-radius: 0.5rem;
+  padding: 12px 16px;
+  border-radius: 8px;
 }
 
 .aminion-editor-content .ProseMirror img {
@@ -255,14 +258,14 @@ h6 {
 }
 
 .aminion-editor-content .ProseMirror blockquote {
-  padding-left: 0.8rem;
+  padding-left: 13px;
   border-left: 2px solid rgba(15, 15, 15, 0.1);
 }
 
 .aminion-editor-content .ProseMirror hr {
   border: none;
   border-top: 2px solid rgba(15, 15, 15, 0.1);
-  margin: 0.5rem 0;
+  margin: 8px 0;
 }
 
 .hljs-variable,
@@ -353,7 +356,7 @@ h6 {
   height: 100%;
   display: flex;
   flex-direction: column;
-  font-size: 1rem;
+  font-size: 16px;
   justify-content: flex-start;
   row-gap: 10px;
   align-items: center;
@@ -362,6 +365,12 @@ h6 {
 }
 
 @media (max-height: 640px) {
+  .aminion-editor-sider-options {
+    row-gap: 8px;
+  }
+}
+
+@media (max-height: 400px) {
   .aminion-editor-sider-options {
     row-gap: 3px;
   }
@@ -376,7 +385,7 @@ h6 {
   display: flex;
   flex-direction: column;
   align-items: center;
-  font-size: 1.2rem;
+  font-size: 19px;
   position: absolute;
   bottom: 20px;
   row-gap: 10px;

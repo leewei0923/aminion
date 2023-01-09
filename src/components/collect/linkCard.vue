@@ -49,7 +49,7 @@ const onNavigateTo = () => {
 .aminion-collect-textCard-tag {
   background-color: var(--deep_blue);
   color: #ffffff;
-  font-size: 0.6rem;
+  font-size: 10px;
   display: inline-block;
   height: 15px;
   margin: 7px 0 5px 0;
@@ -59,12 +59,12 @@ const onNavigateTo = () => {
 .aminion-collect-textCard-maincontent {
   width: 98%;
   margin-left: 1%;
-  font-size: 0.6rem;
+  font-size: 10px;
   font-weight: 500;
-  height: 2.5rem;
+  height: 40px;
   word-wrap: normal;
   overflow: hidden;
-  line-height: 0.9rem;
+  line-height: 14px;
   text-overflow: ellipsis;
   display: -webkit-box;
   -webkit-line-clamp: 2;
@@ -72,7 +72,7 @@ const onNavigateTo = () => {
 }
 
 .aminion-collect-textCard-options-date {
-  font-size: 0.6rem;
+  font-size: 10px;
   font-weight: 600;
 }
 

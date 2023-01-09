@@ -37,7 +37,7 @@ const props = defineProps({
 <style scoped>
 .aminion-collect-picCard-container {
   width: 100%;
-  height: 9rem;
+  height: 144px;
   background-color: var(--deep_blue_100);
   border-radius: var(--border_radius_midle);
 }
@@ -46,7 +46,7 @@ const props = defineProps({
 .aminion-collect-picCard-tag {
   background-color: var(--deep_blue);
   color: #ffffff;
-  font-size: 0.6rem;
+  font-size: 10px;
   display: inline-block;
   height: 15px;
   margin: 7px 0 5px 0;
@@ -56,12 +56,12 @@ const props = defineProps({
 .aminion-collect-picCard-maincontent {
   width: 98%;
   margin-left: 1%;
-  font-size: 0.6rem;
+  font-size: 10px;
   font-weight: 500;
-  height: 5rem;
+  height: 80px;
   word-wrap: normal;
   overflow: hidden;
-  line-height: 0.9rem;
+  line-height: 14px;
   text-overflow: ellipsis;
   display: -webkit-box;
   -webkit-line-clamp: 2;
@@ -74,7 +74,7 @@ const props = defineProps({
 }
 
 .aminion-collect-picCard-options-date {
-  font-size: 0.6rem;
+  font-size: 10px;
   font-weight: 600;
 }
 

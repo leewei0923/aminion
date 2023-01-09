@@ -21,7 +21,7 @@ const props = withDefaults(defineProps<PropsType>(), {
 <style scoped>
 .aminion-notice-container {
   width: 250px;
-  height: 32rem;
+  height: 70vh;
   background-color: var(--normal_background);
   transform: translate(-20px, 40px);
   border-radius: var(--border_radius_midle);
@@ -33,9 +33,11 @@ const props = withDefaults(defineProps<PropsType>(), {
   position: relative;
 }
 
-@media (max-height: 640px) {
+
+
+@media (max-height: 500px) {
   .aminion-notice-container {
-    height: 25rem;
+    height: 60vh;
   }
 }
 

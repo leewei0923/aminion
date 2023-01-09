@@ -40,7 +40,7 @@ onUpdated(() => {});
 <style scoped>
 .aminion-collect-container {
   width: 250px;
-  height: 32rem;
+  height: 70vh;
   background-color: var(--normal_background);
   transform: translate(-20px, 40px);
   border-radius: var(--border_radius_midle);
@@ -51,9 +51,9 @@ onUpdated(() => {});
   scroll-behavior: smooth;
 }
 
-@media (max-height: 640px) {
+@media (max-height: 500px) {
   .aminion-collect-container {
-    height: 25rem;
+    height: 60vh;
   }
 }
 
@@ -95,7 +95,7 @@ onUpdated(() => {});
   margin: 0;
   background-color: aqua;
   /* overflow: hidden; */
-  font-size: 0.6rem;
+  font-size: 10px;
 }
 
 

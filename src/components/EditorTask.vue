@@ -44,7 +44,7 @@ const onAddTask = () => {
 }
 
 .aminion-editorTask-other-circle {
-  width: 1rem;
+  width: 16px;
   height: 15px;
   border: 2px solid black;
   border-radius: 50%;

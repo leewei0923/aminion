@@ -9,6 +9,7 @@ import EditorTask from "./components/EditorTask.vue";
 import NotePage from "./components/NotePage.vue";
 import Loading from "./components/common-components/loading/loading.vue";
 import NoticePage from "./components/NoticePage.vue";
+import LoginedPage from "./components/loginedPage.vue";
 
 const store = siderTagStore();
 
@@ -25,6 +26,7 @@ const { siderTag, getSiderTag } = storeToRefs(store);
     <EditorTask :hidden="siderTag != 'edit-task'" />
     <NotePage :hidden="siderTag != 'note'" />
     <NoticePage :hidden="siderTag != 'notice'" />
+    <LoginedPage :hidden="siderTag != 'login-menu'" />
 
     <!-- <Loading type="line" fill="purple" :size="20"  /> -->
   </div>
@@ -38,5 +40,6 @@ const { siderTag, getSiderTag } = storeToRefs(store);
   display: flex;
   flex-direction: row-reverse;
   transform: translate(0, -50%);
+  z-index: 9999;
 }
 </style>

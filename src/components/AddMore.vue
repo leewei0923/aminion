@@ -70,7 +70,7 @@ const onChangeItem = (label: string) => {
   text-align: center;
   padding: 7px 0;
   border-radius: 50%;
-  font-size: 1rem;
+  font-size: 16px;
   cursor: pointer;
   color: #333;
 }

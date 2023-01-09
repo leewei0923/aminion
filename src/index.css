@@ -25,7 +25,8 @@
   --deep_blue_500: rgba(46, 131, 253, 0.5);
   --deep_blue_100: rgba(85, 152, 250, 0.1);
   --white_800: rgba(233, 233, 233, 1);
-
+  
+  --red_800: #FF0032;
   /*按钮防抖*/
   --animation_btn_throttle: throttle 1s step-end forwards;
 }

@@ -19,7 +19,7 @@ const props = defineProps({
 <style scoped>
 .aminion-note-page-container {
   width: 250px;
-  height: 32rem;
+  height: 70vh;
   background-color: var(--normal_background);
   transform: translate(-20px, 40px);
   border-radius: var(--border_radius_midle);
@@ -31,9 +31,9 @@ const props = defineProps({
   position: relative;
 }
 
-@media (max-height: 640px) {
+@media (max-height: 500px) {
   .aminion-note-page-container {
-    height: 25rem;
+    height: 400px;
   }
 }
 

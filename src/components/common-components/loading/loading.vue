@@ -16,29 +16,59 @@ const props = withDefaults(defineProps<Props>(), {
 </script>
 <template>
   <!-- 线 -->
-  <div class="aminion-loader" v-if="props.type === 'line'">
-    <span class="aminion-loader-bar" v-for="x in new Array(3)"></span>
-    <p class="aminion-loding-tip">加载中</p>
+
+  <div class="aminion-loding-line-container" v-if="props.type === 'line'">
+    <div
+      class="aminion-loader"
+      :style="{
+        '--bg-color': props.fill,
+        width: `${props.size}px`,
+        height: `${props.size}px`,
+      }"
+    >
+      <span class="aminion-loader-bar" :style="{
+        '--uib-color': props.fill,
+        width: `${props.size}px`,
+        height: `${props.size}px`,
+      }" v-for="x in new Array(3)"></span>
+    </div>
+    <p
+      class="aminion-loding-tip"
+      :style="{ 'font-size': `${props.size / 1.5}px`, color: props.fill }"
+    >
+      加载中
+    </p>
   </div>
 
   <!-- 圆圈 -->
 
-  <div
-    class="aminion-dot-spinner"
-    :style="{
-      '--uib-color': props.fill,
-      width: `${props.size}px`,
-      height: `${props.size}px`,
-    }"
-    v-else
-  >
-    <div class="aminion-dot-spinner__dot" v-for="x in new Array(8)"></div>
-    <p class="aminion-loding-tip" :style="{ 'font-size': props.size }">
+  <div class="aminion-loding-circle-container" v-else>
+    <div
+      class="aminion-dot-spinner"
+      :style="{
+        '--uib-color': props.fill,
+        width: `${props.size}px`,
+        height: `${props.size}px`,
+      }"
+    >
+      <div class="aminion-dot-spinner__dot" v-for="x in new Array(8)"></div>
+    </div>
+    <p
+      class="aminion-loding-tip"
+      :style="{ 'font-size': `${props.size / 1.5}px`, color: props.fill }"
+    >
       加载中
     </p>
   </div>
 </template>
 <style>
+.aminion-loding-circle-container {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 .aminion-dot-spinner {
   --uib-size: 2.8rem;
   --uib-speed: 0.9s;
@@ -49,7 +79,6 @@ const props = withDefaults(defineProps<Props>(), {
   justify-content: flex-start;
   height: var(--uib-size);
   width: var(--uib-size);
-  background-color: aqua;
 }
 
 .aminion-dot-spinner__dot {
@@ -145,6 +174,14 @@ const props = withDefaults(defineProps<Props>(), {
 }
 
 /* 线 */
+
+.aminion-loding-line-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  row-gap: 0.6rem;
+}
+
 .aminion-loader {
   display: flex;
   align-items: center;
@@ -154,7 +191,7 @@ const props = withDefaults(defineProps<Props>(), {
   display: inline-block;
   width: 3px;
   height: 20px;
-  background-color: rgba(255, 255, 255, 0.5);
+  background-color: var(--bg-color);
   border-radius: 10px;
   animation: scale-up4 1s linear infinite;
 }
@@ -171,7 +208,7 @@ const props = withDefaults(defineProps<Props>(), {
 
 @keyframes scale-up4 {
   20% {
-    background-color: rgb(49, 49, 49);
+    background-color: var(--bg-color);
     transform: scaleY(1.5);
   }
 
@@ -181,12 +218,7 @@ const props = withDefaults(defineProps<Props>(), {
 }
 
 .aminion-loding-tip {
-  position: absolute;
-  bottom: -20px;
   width: auto;
-  left: -8px;
-  /* transform: translate(-40%, 0); */
   color: var(--uib-color);
-  background-color: blue;
 }
 </style>

@@ -4,6 +4,7 @@ import { storeToRefs } from "pinia";
 import { ref } from "vue";
 import AddMore from "./AddMore.vue";
 import { siderTagStore } from "../store/sideBarTag";
+import LoginBar from "./loginBar.vue";
 
 const store = siderTagStore();
 
@@ -28,10 +29,11 @@ const onChangeItem = (label: string) => {
 <template>
   <div class="aminion-sidebar-container">
     <!-- 点击登录 -->
-    <button class="aminion-login-btn" @click="onChangeItem('loginIn')">
+    <!-- <button class="aminion-login-btn" @click="onChangeItem('loginIn')">
       登录
-    </button>
+    </button> -->
 
+    <LoginBar :on-change-item="onChangeItem" :login-flag="true" />
     <section class="aminion-sidebar-boxs">
       <div
         class="aminion-sidebar-btn-box"
@@ -57,10 +59,10 @@ const onChangeItem = (label: string) => {
 
       <div
         class="aminion-sidebar-btn-box"
-        @click="onChangeItem('remind')"
+        @click="onChangeItem('notice')"
         :class="{
           'aminion-sidebar-btn-box-selected':
-            itemOpenFlag === 'remind' ? true : false,
+            itemOpenFlag === 'notice' ? true : false,
         }"
       >
         <remind theme="outline" size="24" />

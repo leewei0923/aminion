@@ -32,23 +32,24 @@ import { CloseOne } from "@icon-park/vue-next";
 
 .aminion-note-card-title {
   padding: 0 5px;
-  font-size: 0.8rem;
+  font-size: 13px;
   font-weight: 800;
   width: 100%;
   text-overflow: ellipsis;
   overflow: hidden;
+  margin: 0;
 }
 
 .aminion-note-card-main-content {
-  font-size: 0.6rem;
+  font-size: 10px;
   padding: 0 5px;
   width: 100%;
   height: 65%;
-  line-height: 0.8rem;
+  line-height: 13px;
 }
 
 .aminion-note-card-footer {
-  font-size: 0.8rem;
+  font-size: 13px;
   padding: 5px;
   position: relative;
 }
@@ -56,7 +57,7 @@ import { CloseOne } from "@icon-park/vue-next";
 .aminion-note-card-tag {
   color: #fff;
   background-color: var(--deep_blue);
-  font-size: 0.6rem;
+  font-size: 10px;
   padding: 3px 5px;
   border-radius: var(--border_radius_small);
   margin: 0 10px;
