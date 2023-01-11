@@ -10,6 +10,7 @@ import NotePage from "./components/NotePage.vue";
 import Loading from "./components/common-components/loading/loading.vue";
 import NoticePage from "./components/NoticePage.vue";
 import LoginedPage from "./components/loginedPage.vue";
+import Amessage from "src/components/common-components/Message";
 
 const store = siderTagStore();
 

@@ -5,6 +5,10 @@
   "version": "0.1.0",
   "action": { "default_popup": "index.html" },
   "author": "leeweo",
+  "icons": {
+    "16": "images/logo.png",
+    "128": "images/logo.png"
+  },
   "content_scripts": [
     {
       "js": ["src/content.ts"],
@@ -14,5 +18,17 @@
   "background": {
     "service_worker": "src/background.ts",
     "type": "module"
-  }
+  },
+  "permissions": [
+    "contextMenus",
+    "history",
+    "pageCapture",
+    "cookies",
+    "tabs",
+    "notifications",
+    "webRequest",
+    "storage",
+    "scripting"
+  ],
+  "host_permissions": ["http://*/*", "https://*/*"]
 }

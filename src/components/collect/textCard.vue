@@ -43,11 +43,11 @@ const props = defineProps({
 .aminion-collect-textCard-tag {
   background-color: var(--deep_blue);
   color: #ffffff;
-  font-size: 10px;
+  font-size: 9px;
   display: inline-block;
-  height: 15px;
+  height: 20px;
   margin: 7px 0 5px 0;
-  padding: 1px 10px 1px 5px;
+  padding: 0px 10px 0px 8px;
 }
 
 .aminion-collect-textCard-maincontent {
@@ -57,7 +57,7 @@ const props = defineProps({
   font-weight: 500;
   height: 43px;
   overflow: hidden;
-  line-height: 43px;
+  line-height: 15px;
   text-overflow: ellipsis;
   display: -webkit-box;
   -webkit-line-clamp: 2;
