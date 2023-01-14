@@ -11,20 +11,30 @@ import Loading from "./components/common-components/loading/loading.vue";
 import NoticePage from "./components/NoticePage.vue";
 import LoginedPage from "./components/loginedPage.vue";
 import Amessage from "src/components/common-components/Message";
+import { ref } from "vue";
 
 const store = siderTagStore();
 
 const { siderTag, getSiderTag } = storeToRefs(store);
+const { changeSiderTag } = store;
+
+const loginKeyPersistence = ref("");
 </script>
 
 <template>
   <div class="aminion-container">
     <SideBar />
-    <LoginIn qrcode="登录账号" :hidden="siderTag != 'loginIn'" />
+    <LoginIn
+      v-if="siderTag == 'loginIn'"
+      :on-close="
+        () => {
+          changeSiderTag('');
+        }
+      "
+    />
     <CollectPage :hidden="siderTag != 'collect'" />
-
-    <editor :hidden="siderTag != 'edit-note'" />
-    <EditorTask :hidden="siderTag != 'edit-task'" />
+    <editor v-if="siderTag == 'edit-note'" />
+    <EditorTask v-if="siderTag == 'edit-task'" />
     <NotePage :hidden="siderTag != 'note'" />
     <NoticePage :hidden="siderTag != 'notice'" />
     <LoginedPage :hidden="siderTag != 'login-menu'" />

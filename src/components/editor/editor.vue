@@ -28,10 +28,6 @@ import { lowlight } from "lowlight";
 import { onBeforeUnmount, onMounted, ref } from "vue";
 import dayjs from "dayjs";
 
-const props = defineProps({
-  hidden: { type: Boolean, required: true },
-});
-
 const editor = useEditor({
   content: "hello tiptap",
 
@@ -63,7 +59,7 @@ const onSave = () => {
 </script>
 
 <template>
-  <div class="aminion-editor-container" v-if="editor" :hidden="props.hidden">
+  <div class="aminion-editor-container" v-if="editor">
     <div class="aminion-editor-title-container">
       <span>标题:</span>
       <input

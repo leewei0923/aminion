@@ -1,16 +1,100 @@
 <script setup lang="ts">
 import QrcodeVue from "qrcode.vue";
+import { Redo } from "@icon-park/vue-next";
+import {
+  reactive,
+  computed,
+  onMounted,
+  onUnmounted,
+  ref,
+  onBeforeMount,
+} from "vue";
+import { useCountdown } from "src/hooks/useCountdown";
+import { apiGetUuidUrl } from "src/request/login/api";
 
-const props = defineProps({
-  hidden: { type: Boolean, required: true },
-  qrcode: { type: String, required: true },
+export interface propsType {
+  onClose?: () => void;
+}
+
+const props = withDefaults(defineProps<propsType>(), {});
+
+const { counter, start } = useCountdown();
+
+// 关闭事件
+const onClose = computed(() => {
+  return typeof props.onClose === "function" ? props.onClose : function () {};
 });
 
-const qrdata = props.qrcode;
+// 挂载前请求获取key值
+const qrdata = ref("");
+const requestData = ref("");
+const timer = ref<NodeJS.Timeout | null>();
+/**
+ * 用于更新请求和初挂载请求
+ * @param key_id
+ */
+const onFetchData = async (key_id: string) => {
+  const uuidRes = await apiGetUuidUrl({ key_id: key_id ?? "" });
+  requestData.value = uuidRes.key_id;
+  onShowScan(uuidRes.key_id);
+
+  if (uuidRes.isScan && uuidRes.status) {
+    console.log(uuidRes);
+    timer.value = null;
+    return;
+  } else if (uuidRes.isScan) {
+    onScanSuccess(true);
+  } else {
+    onScanSuccess(false);
+  }
+
+  console.count("请求", uuidRes);
+
+  timer.value = setTimeout(() => {
+    onFetchData(key_id);
+  }, 3000);
+};
+
+/**
+ * 用于生成二维码展示给用户扫描
+ * @param key_id
+ */
+const onShowScan = (key_id: string) => {
+  const msg = {
+    type: "scan",
+    origin: "chrome-plugin",
+    key_id: key_id,
+  };
+  qrdata.value = JSON.stringify(msg);
+};
+
+const scanFlag = ref(false);
+const onScanSuccess = (bool: boolean) => {
+  scanFlag.value = bool;
+};
+
+const onLoginSuccess = () => {};
+
+onBeforeMount(() => {
+  onFetchData(requestData.value);
+  console.log("登录，挂载前请求");
+});
+
+const onRefresh = () => {
+  start(30);
+};
+
+onMounted(() => {
+  start(30);
+});
+
+onUnmounted(() => {
+  console.log("卸载");
+});
 </script>
 
 <template>
-  <div class="aminion-login-container" :hidden="props.hidden">
+  <div class="aminion-login-container">
     <div class="aminion-login-qrcode">
       <qrcode-vue
         :value="qrdata"
@@ -18,9 +102,28 @@ const qrdata = props.qrcode;
         :margin="2"
         class="aminion_qrcode_vue"
       ></qrcode-vue>
+
+      <div
+        class="aminion-login-mask-container"
+        @click="onRefresh"
+        v-show="counter === 0"
+      >
+        <redo
+          theme="outline"
+          class="aminion-login-mask-redo"
+          :spin="true"
+        />刷新
+      </div>
     </div>
 
-    <button class="aminion-login-cancel-btn">取消</button>
+    <p class="aminion-login-countdown" v-show="counter !== 0 && !scanFlag">
+      {{ counter }}秒后结束，请手动刷新
+    </p>
+
+    <p class="aminion-login-countdown" v-show="scanFlag">
+      已经扫描，请点击登录
+    </p>
+    <button class="aminion-login-cancel-btn" @click="onClose">取消</button>
   </div>
 </template>
 
@@ -39,6 +142,7 @@ const qrdata = props.qrcode;
   background-color: #ffffff;
   border-radius: var(--border_radius_large);
   margin: 20px auto;
+  position: relative;
 }
 
 .aminion-login-cancel-btn {
@@ -53,11 +157,39 @@ const qrdata = props.qrcode;
   cursor: pointer;
 }
 
+.aminion-login-countdown {
+  text-align: center;
+  font-size: 10px;
+  transform: translate(0, -10px);
+  color: rgba(50, 50, 50, 0.7);
+}
+
 .aminion-login-cancel-btn:active {
   background-color: var(--deep_blue_500);
 }
 
 .aminion_qrcode_vue {
   border-radius: var(--border_radius_midle);
+}
+
+.aminion-login-mask-container {
+  position: absolute;
+  top: 0;
+  background-color: var(--white_700);
+  width: 100%;
+  height: 100%;
+  left: 0;
+  font-size: 15px;
+  line-height: 170px;
+  text-align: center;
+  color: rgba(20, 20, 20, 0.9);
+  backdrop-filter: blur(5px);
+  cursor: pointer;
+}
+
+.aminion-login-mask-redo {
+  font-size: 14px;
+  margin: 2px 0;
+  padding: 5px 5px;
 }
 </style>

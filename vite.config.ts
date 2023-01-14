@@ -18,4 +18,19 @@ export default defineConfig({
   resolve: {
     alias: { src: path.resolve(__dirname, "src") },
   },
+  server: {
+    origin: "http://127.0.0.1:3000",
+    // host: "0.0.0.0",
+    // 是否开启 https
+    https: false,
+    port: 3000,
+    cors: true,
+    proxy: {
+      "/api/": {
+        target: "http://127.0.0.1:3001",
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api/, ""),
+      },
+    },
+  },
 });

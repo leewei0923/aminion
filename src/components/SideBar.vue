@@ -34,7 +34,7 @@ const onChangeItem = (label: string) => {
       登录
     </button> -->
 
-    <LoginBar :on-change-item="onChangeItem" :login-flag="true" />
+    <LoginBar :on-change-item="onChangeItem" :login-flag="false" />
     <section class="aminion-sidebar-boxs">
       <div
         class="aminion-sidebar-btn-box"

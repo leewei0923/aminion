@@ -1,11 +1,6 @@
 <script lang="ts" setup>
 import { ref } from "vue";
 
-const props = defineProps({
-  hidden: { type: Boolean, required: true },
-});
-console.log(props.hidden);
-
 const taskContentRef = ref("");
 
 const onAddTask = () => {
@@ -14,7 +9,7 @@ const onAddTask = () => {
 </script>
 
 <template>
-  <div :hidden="props.hidden">
+  <div>
     <div class="aminion-editorTask-container">
       <div class="aminion-editorTask-other-circle"></div>
       <input
