@@ -11,6 +11,7 @@ import {
 } from "vue";
 import { useCountdown } from "src/hooks/useCountdown";
 import { apiGetUuidUrl } from "src/request/login/api";
+import { setStorage } from "src/utils/storage";
 
 export interface propsType {
   onClose?: () => void;
@@ -28,18 +29,28 @@ const onClose = computed(() => {
 // 挂载前请求获取key值
 const qrdata = ref("");
 const requestData = ref("");
-const timer = ref<NodeJS.Timeout | null>();
+const timer = ref<NodeJS.Timeout | null>(null);
 /**
  * 用于更新请求和初挂载请求
  * @param key_id
  */
 const onFetchData = async (key_id: string) => {
+  if (counter.value === 0 && timer.value !== null) {
+    clearTimeout(timer.value);
+  }
   const uuidRes = await apiGetUuidUrl({ key_id: key_id ?? "" });
   requestData.value = uuidRes.key_id;
-  onShowScan(uuidRes.key_id);
+  onShowScan(requestData.value);
 
   if (uuidRes.isScan && uuidRes.status) {
-    console.log(uuidRes);
+    if (timer.value !== null) {
+      clearTimeout(timer.value);
+    }
+
+    if (uuidRes.code === 200) {
+      setStorage({ loginToken: uuidRes.token });
+    }
+
     timer.value = null;
     return;
   } else if (uuidRes.isScan) {
@@ -48,10 +59,10 @@ const onFetchData = async (key_id: string) => {
     onScanSuccess(false);
   }
 
-  console.count("请求", uuidRes);
+  console.log("请求", uuidRes);
 
   timer.value = setTimeout(() => {
-    onFetchData(key_id);
+    onFetchData(requestData.value);
   }, 3000);
 };
 
@@ -80,8 +91,10 @@ onBeforeMount(() => {
   console.log("登录，挂载前请求");
 });
 
+// 倒计时结束刷新按钮
 const onRefresh = () => {
   start(30);
+  onFetchData(requestData.value);
 };
 
 onMounted(() => {
@@ -89,6 +102,10 @@ onMounted(() => {
 });
 
 onUnmounted(() => {
+  if (timer.value !== null) {
+    clearTimeout(timer.value);
+  }
+
   console.log("卸载");
 });
 </script>
@@ -114,6 +131,14 @@ onUnmounted(() => {
           :spin="true"
         />刷新
       </div>
+
+      <div
+        class="aminion-login-mask-container"
+        v-show="counter === 0"
+      >
+        已经扫码，请登录。
+      </div>
+
     </div>
 
     <p class="aminion-login-countdown" v-show="counter !== 0 && !scanFlag">

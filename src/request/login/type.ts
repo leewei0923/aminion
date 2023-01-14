@@ -11,4 +11,7 @@ export interface GetUUIDSuccessResType {
   start_time: number;
   expire_time: number;
   openid: string;
+  code: number;
+  msg: string;
+  token: string;
 }
