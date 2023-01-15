@@ -30,12 +30,14 @@
     "lowlight": "^2.8.0",
     "pinia": "^2.0.28",
     "qrcode.vue": "^3.3.3",
+    "qs": "^6.11.0",
     "vue": "^3.2.37"
   },
   "devDependencies": {
     "@crxjs/vite-plugin": "^2.0.0-beta.9",
     "@types/chrome": "^0.0.206",
     "@types/node": "^18.11.18",
+    "@types/qs": "^6.9.7",
     "@vitejs/plugin-vue": "^3.1.0",
     "typescript": "^4.6.4",
     "vite": "^3.1.0",

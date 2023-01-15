@@ -1,6 +1,5 @@
-import axios, { AxiosRequestConfig } from 'axios';
-import { baseURL } from './url';
-import Amessing from 'src/components/common-components/Message'
+import axios, { AxiosRequestConfig } from "axios";
+import { baseURL } from "./url";
 
 // 默认请求超时时间
 const timeout = 30000;
@@ -10,7 +9,7 @@ const service = axios.create({
   timeout,
   baseURL,
   // 如需要携带cookie 该值需设为true
-  withCredentials: true
+  withCredentials: true,
 });
 
 // 统一请求拦截 可配置自定义headers 例如 language、token等
@@ -18,7 +17,7 @@ service.interceptors.request.use(
   (config: AxiosRequestConfig) => {
     // 配置自定义请求头
     config.headers = {
-    //   token: GetTtalkToken()
+      //   token: GetTtalkToken()
     };
     return config;
   },
@@ -38,8 +37,8 @@ interface axiosTypes<T> {
 }
 
 // 后台响应数据格式
-// ###该接口用于规定后台返回的数据格式，意为必须携带code、msg以及result
-// ###而result的数据格式 由外部提供。如此即可根据不同需求，定制不同的数据格式
+// 该接口用于规定后台返回的数据格式，意为必须携带code、msg以及result
+// 而result的数据格式 由外部提供。如此即可根据不同需求，定制不同的数据格式
 interface responseTypes<T> {
   code: number;
   msg: string;
@@ -48,23 +47,23 @@ interface responseTypes<T> {
 
 // 核心处理代码 将返回一个promise 调用then将可获取响应的业务数据
 const requestHandler = async <T>(
-  method: 'get' | 'post' | 'put' | 'delete',
+  method: "get" | "post" | "put" | "delete",
   url: string,
   params: object = {},
   config: AxiosRequestConfig = {}
 ): Promise<T> => {
   let response: Promise<axiosTypes<responseTypes<T>>>;
   switch (method) {
-    case 'get':
+    case "get":
       response = service.get(url, { params: { ...params }, ...config });
       break;
-    case 'post':
+    case "post":
       response = service.post(url, { ...params }, { ...config });
       break;
-    case 'put':
+    case "put":
       response = service.put(url, { ...params }, { ...config });
       break;
-    case 'delete':
+    case "delete":
       response = service.delete(url, { params: { ...params }, ...config });
       break;
   }
@@ -78,11 +77,12 @@ const requestHandler = async <T>(
         if (data.code !== 200) {
           // 特定状态码 处理特定的需求
           if (data.code === 401) {
-            Amessing.warning('您的账号已登出或超时，即将登出...');
+            console.log("您的账号已登出或超时，即将登出...");
+            reject("授权出错，请重新登录");
           }
 
           const e = JSON.stringify(data);
-          Amessing.warning(`请求错误`);
+
           console.log(`请求错误：${e}`);
           // 数据请求错误 使用reject将错误返回
           reject(data);
@@ -93,7 +93,6 @@ const requestHandler = async <T>(
       })
       .catch((error) => {
         const e = JSON.stringify(error);
-        Amessing.warning(`网络错误`);
         console.log(`网络错误：${e}`);
         reject(error);
       });
@@ -103,16 +102,16 @@ const requestHandler = async <T>(
 // 使用 request 统一调用，包括封装的get、post、put、delete等方法
 const request = {
   get: async <T>(url: string, params?: object, config?: AxiosRequestConfig) =>
-    await requestHandler<T>('get', url, params, config),
+    await requestHandler<T>("get", url, params, config),
   post: async <T>(url: string, params?: object, config?: AxiosRequestConfig) =>
-    await requestHandler<T>('post', url, params, config),
+    await requestHandler<T>("post", url, params, config),
   put: async <T>(url: string, params?: object, config?: AxiosRequestConfig) =>
-    await requestHandler<T>('put', url, params, config),
+    await requestHandler<T>("put", url, params, config),
   delete: async <T>(
     url: string,
     params?: object,
     config?: AxiosRequestConfig
-  ) => await requestHandler<T>('delete', url, params, config)
+  ) => await requestHandler<T>("delete", url, params, config),
 };
 
 // 导出至外层，方便统一使用

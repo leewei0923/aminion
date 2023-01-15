@@ -12,6 +12,7 @@ import {
 import { useCountdown } from "src/hooks/useCountdown";
 import { apiGetUuidUrl } from "src/request/login/api";
 import { setStorage } from "src/utils/storage";
+import { sendMsgToContentScript } from "src/utils/correspond";
 
 export interface propsType {
   onClose?: () => void;
@@ -34,37 +35,39 @@ const timer = ref<NodeJS.Timeout | null>(null);
  * 用于更新请求和初挂载请求
  * @param key_id
  */
-const onFetchData = async (key_id: string) => {
-  if (counter.value === 0 && timer.value !== null) {
-    clearTimeout(timer.value);
-  }
-  const uuidRes = await apiGetUuidUrl({ key_id: key_id ?? "" });
-  requestData.value = uuidRes.key_id;
-  onShowScan(requestData.value);
+// const onFetchData = async (key_id: string) => {
+//   if (counter.value === 0 && timer.value !== null) {
+//     clearTimeout(timer.value);
+//   }
+//   const uuidRes = await apiGetUuidUrl({ key_id: key_id ?? "" });
+//   requestData.value = uuidRes.key_id;
+//   onShowScan(requestData.value);
 
-  if (uuidRes.isScan && uuidRes.status) {
-    if (timer.value !== null) {
-      clearTimeout(timer.value);
-    }
+//   if (uuidRes.isScan && uuidRes.status) {
+//     if (timer.value !== null) {
+//       clearTimeout(timer.value);
+//     }
 
-    if (uuidRes.code === 200) {
-      setStorage({ loginToken: uuidRes.token });
-    }
+//     if (uuidRes.code === 200) {
+//       setStorage({ loginToken: uuidRes.token });
+//     }
 
-    timer.value = null;
-    return;
-  } else if (uuidRes.isScan) {
-    onScanSuccess(true);
-  } else {
-    onScanSuccess(false);
-  }
+//     timer.value = null;
+//     return;
+//   } else if (uuidRes.isScan) {
+//     onScanSuccess(true);
+//   } else {
+//     onScanSuccess(false);
+//   }
 
-  console.log("请求", uuidRes);
+//   console.log("请求", uuidRes);
 
-  timer.value = setTimeout(() => {
-    onFetchData(requestData.value);
-  }, 3000);
-};
+//   timer.value = setTimeout(() => {
+//     onFetchData(requestData.value);
+//   }, 3000);
+// };
+
+// TODO:逻辑部分出错
 
 /**
  * 用于生成二维码展示给用户扫描
@@ -87,18 +90,21 @@ const onScanSuccess = (bool: boolean) => {
 const onLoginSuccess = () => {};
 
 onBeforeMount(() => {
-  onFetchData(requestData.value);
+  // onFetchData(requestData.value);
   console.log("登录，挂载前请求");
 });
 
 // 倒计时结束刷新按钮
 const onRefresh = () => {
   start(30);
-  onFetchData(requestData.value);
+  // onFetchData(requestData.value);
 };
 
 onMounted(() => {
   start(30);
+  sendMsgToContentScript({ greet: "可以交流了" }, function (response: any) {
+    console.log("来自xx的回复", response);
+  });
 });
 
 onUnmounted(() => {
@@ -132,13 +138,9 @@ onUnmounted(() => {
         />刷新
       </div>
 
-      <div
-        class="aminion-login-mask-container"
-        v-show="counter === 0"
-      >
+      <div class="aminion-login-mask-container" v-show="counter === 0">
         已经扫码，请登录。
       </div>
-
     </div>
 
     <p class="aminion-login-countdown" v-show="counter !== 0 && !scanFlag">
