@@ -92,6 +92,9 @@ const onLoginSuccess = () => {};
 onBeforeMount(() => {
   // onFetchData(requestData.value);
   console.log("登录，挂载前请求");
+  const origin = window.location.origin;
+
+  window.postMessage({ test: "你好！" }, origin);
 });
 
 // 倒计时结束刷新按钮

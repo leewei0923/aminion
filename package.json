@@ -28,6 +28,7 @@
     "dayjs": "^1.11.7",
     "highlight.js": "^11.7.0",
     "lowlight": "^2.8.0",
+    "nanoid": "^4.0.0",
     "pinia": "^2.0.28",
     "qrcode.vue": "^3.3.3",
     "qs": "^6.11.0",
