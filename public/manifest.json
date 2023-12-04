@@ -4,7 +4,7 @@
   "description": "a chrome plugin",
   "version": "0.1.0",
   "action": { "default_popup": "index.html" },
-  "author": "leeweo",
+  "author": "leewei",
   "icons": {
     "16": "images/logo.png",
     "128": "images/logo.png"
