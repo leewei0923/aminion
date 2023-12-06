@@ -7,9 +7,9 @@ import profile from "./pages/profile.vue";
 <template>
   <div class="aminion-container">
     <h2 class="app-title">Aminion</h2>
-    <!--<home />-->
+    <home />
     <!--<login />-->
-    <profile />
+    <!--<profile />-->
   </div>
 </template>
 
@@ -23,13 +23,15 @@ import profile from "./pages/profile.vue";
   margin: -5px 0 5px 0;
 }
 .aminion-container {
-  width: 250px;
-  height: 350px;
+  min-width: 250px;
+  max-width: auto;
+  min-height: 350px;
+  max-height: fit-content;
   background-color: #eae6e6;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin: 0;
+  padding: 10px 0;
 }
 </style>

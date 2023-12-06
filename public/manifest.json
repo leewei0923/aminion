@@ -28,7 +28,8 @@
     "notifications",
     "webRequest",
     "storage",
-    "scripting"
+    "scripting",
+    "activeTab"
   ],
   "host_permissions": ["http://*/*", "https://*/*"]
 }
