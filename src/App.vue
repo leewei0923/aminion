@@ -1,13 +1,15 @@
 <script setup lang="ts">
 import home from "./pages/home.vue";
 import login from "./pages/login.vue";
+import profile from "./pages/profile.vue";
 </script>
 
 <template>
   <div class="aminion-container">
     <h2 class="app-title">Aminion</h2>
     <!--<home />-->
-    <login />
+    <!--<login />-->
+    <profile />
   </div>
 </template>
 
