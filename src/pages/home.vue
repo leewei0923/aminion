@@ -18,19 +18,24 @@ function getCurrentTab() {
   });
 }
 
+const copyFlag = ref(false);
+
 /**
  * copy-btn copy the taburl
  */
 function onCopy() {
-
   if (!taburl.value) {
     alert("没有获取到当前的url");
     return;
   }
 
   navigator.clipboard.writeText(taburl.value).then((result) => {
-    console.log("success", result);
+    copyFlag.value = true;
   });
+
+  setTimeout(() => {
+    copyFlag.value = false;
+  }, 2000);
 }
 
 onMounted(() => {
@@ -52,7 +57,13 @@ onMounted(() => {
 
     <!--  toggle button  -->
     <div class="options-container">
-      <button class="copy-btn">复制</button>
+      <button
+        class="copy-btn"
+        :class="copyFlag ? 'copy-susscess' : ''"
+        @click="onCopy"
+      >
+        {{ copyFlag ? "成功" : "复制" }}
+      </button>
       <button class="login-btn">登录</button>
     </div>
   </div>
@@ -82,8 +93,8 @@ onMounted(() => {
   font-size: 10px;
   margin: 0 0 5px 0;
   border-top: 1px dashed black;
-  text-wrap:wrap;
-  word-break:break-all;
+  text-wrap: wrap;
+  word-break: break-all;
 }
 
 .options-container {
@@ -108,6 +119,10 @@ onMounted(() => {
 
 .copy-btn:active {
   background-color: #61aefc;
+}
+
+.copy-susscess {
+  background-color: #32cd32;
 }
 .login-btn {
   border: 1px solid #1e90ff;
