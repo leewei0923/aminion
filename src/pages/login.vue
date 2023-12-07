@@ -16,9 +16,11 @@ import {
   onBeforeMount,
 } from "vue";
 import { useCountdown } from "src/hooks/useCountdown";
-import { apiGetUuidUrl } from "src/request/login/api";
-import { setStorage } from "src/utils/storage";
-import { sendMsgToContentScript } from "src/utils/correspond";
+import { homeRouteStore } from "src/store/homeRouteTag";
+
+const store = homeRouteStore();
+
+const { changeHomeRouteTag } = store;
 
 export interface propsType {
   onClose?: () => void;
@@ -29,24 +31,18 @@ const props = withDefaults(defineProps<propsType>(), {});
 const { counter, start } = useCountdown();
 
 // 关闭事件
-const onClose = computed(() => {
-  return typeof props.onClose === "function" ? props.onClose : function () {};
-});
+const onClose = () => {
+  changeHomeRouteTag("home");
+};
 
 // 挂载前请求获取key值
 const qrdata = ref("");
 const requestData = ref("");
 const timer = ref<NodeJS.Timeout | null>(null);
 
-
-
 const scanFlag = ref(false);
 
-
-
-onBeforeMount(() => {
-
-});
+onBeforeMount(() => {});
 
 // 倒计时结束刷新按钮
 const onRefresh = () => {

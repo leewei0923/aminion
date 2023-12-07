@@ -7,8 +7,13 @@
 <script setup lang="ts">
 import { onMounted, ref } from "vue";
 import qrcode from "../components/qrcode.vue";
+import { homeRouteStore } from "src/store/homeRouteTag";
 
 const taburl = ref<string | undefined>("");
+
+const store = homeRouteStore();
+
+const { changeHomeRouteTag } = store;
 
 function getCurrentTab() {
   chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
@@ -38,6 +43,8 @@ function onCopy() {
   }, 2000);
 }
 
+const loginFlag = ref(true);
+
 onMounted(() => {
   getCurrentTab();
 });
@@ -64,7 +71,25 @@ onMounted(() => {
       >
         {{ copyFlag ? "成功" : "复制" }}
       </button>
-      <button class="login-btn">登录</button>
+      <button
+        class="login-btn"
+        v-if="!loginFlag"
+        @click="
+          () => {
+            changeHomeRouteTag('login');
+          }
+        "
+      >
+        登录
+      </button>
+
+      <div v-if="loginFlag" class="home-avatar-box" @click="changeHomeRouteTag('profile')">
+        <img
+          src="https://p6-passport.byteacctimg.com/img/user-avatar/002843adf8bd09f43aa84011b4a93238~150x150.awebp"
+          class="home-avatar"
+          alt=""
+        />
+      </div>
     </div>
   </div>
 </template>
@@ -133,5 +158,22 @@ onMounted(() => {
   background-color: #1e90ff;
   color: white;
   transition: 0.3s;
+}
+.home-avatar-box {
+  width: 30px;
+  height: 30px;
+  margin-top: 5px;
+  cursor: pointer;
+}
+
+.home-avatar-box:hover {
+  transform: scale(1.2);
+}
+
+.home-avatar {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  object-fit: cover;
 }
 </style>

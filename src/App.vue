@@ -1,15 +1,22 @@
 <script setup lang="ts">
+import { storeToRefs } from "pinia";
 import home from "./pages/home.vue";
 import login from "./pages/login.vue";
 import profile from "./pages/profile.vue";
+import { homeRouteStore } from "./store/homeRouteTag";
+
+const store = homeRouteStore();
+
+const { homeRouteTag } = storeToRefs(store);
+
 </script>
 
 <template>
   <div class="aminion-container">
     <h2 class="app-title">Aminion</h2>
-    <home />
-    <!--<login />-->
-    <!--<profile />-->
+    <home v-if="homeRouteTag == 'home'" />
+    <login v-if="homeRouteTag == 'login'" />
+    <profile v-if="homeRouteTag == 'profile'" />
   </div>
 </template>
 
